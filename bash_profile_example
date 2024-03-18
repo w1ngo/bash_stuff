@@ -1,0 +1,7 @@
+. ~/.bashrc
+bin "set show-all-if-ambigious"
+bind "set bell-style none"
+
+HISCONTROL=ignoreboth
+HISTFILESIZE=2000
+HISTSIZE=1000
