@@ -46,3 +46,16 @@ extract () {
 		echo "$1 is not a valid input file to extract"
 	fi
 }
+
+reload () {
+	. ~/.bash_functions
+	. ~/.bash_aliases
+}
+
+hh_help () {
+	echo "Not completed yet"
+}
+
+hh () {
+	echo "Not completed yet"
+}
