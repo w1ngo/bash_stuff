@@ -1,0 +1,23 @@
+colorscheme desert
+set background=dark
+
+set tabstop=4 shiftwidth=4 noexpandtab
+
+filetype on
+filetype indent on
+filetype plugin on
+
+set nocopmatible
+
+syntax on
+syntax enable
+
+set number relativenumber
+set smartcase showmode
+
+inoremap {<CR> {<CR>}<ESC>ko
+
+if &diff
+    colorscheme evening
+    set mouse=a
+endif
