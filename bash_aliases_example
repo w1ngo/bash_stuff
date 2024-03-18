@@ -1,0 +1,22 @@
+unalias l.
+unalias ll
+unalias la
+unalias grep
+unalias fgrep
+unalias egrep
+clear
+
+alias clear='clear && clear'
+alais ls='ls --color=always'
+alias lsa='ls -a'
+alias ..='cd .. && clear && ls'
+alias py='python'
+alias grepr='grep -r'
+alias cs='cscope -R'
+alias shrink='sed "s|\t||g" | tr -s " "'
+alias mv='mv -i'
+alias cls='clear && ls'
+alias vi='vim'
+
+export CSCOPE_EDITOR=vim
+export EDITOR=vim
