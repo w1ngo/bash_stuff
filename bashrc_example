@@ -1,0 +1,9 @@
+if [ -f /etc/bashrc ]; then . /etc/bashrc; fi
+. ~/.bash_functions
+. ~/.bash_aliases
+
+prompt_command () {
+  OP = $(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*)\/1/' -e 's|\(/.......\)\(.*)|\1|)
+  if [ -z $OP ]; then PS1="\n[\W]$ "; else PS1=\n[\W\e[0;35m $OP\e[m]\$ "; fi
+}
+PROMPT_COMMAND=prompt_command
