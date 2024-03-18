@@ -10,3 +10,39 @@ list_functions () {
   	fi
 }
 
+# arg 1 should be absolute path to folder storing the clones
+update_clones () {
+	LOC=$(pwd)
+	cd $1
+	FOLDERS=($(ls --color=never -d */))
+
+	for folder in "${FOLDERS[@]"; do
+		cd $1/folder
+		if [ -d ".git" ]; then
+			echo "Update folder: $folder"
+			git remote update
+			echo
+		fi
+	done
+
+	cd $LOC
+}
+
+extract () {
+	if [ -f $1 ]; then
+		case $1 in
+			*.tar.bz2)	tar xzjf	$1 ;;
+			*.targz)	tar xvzf	$1 ;;
+			*.bz2)		bunzip		$1 ;;
+			*.rar)		unrar x		$1 ;;
+			*.gz)		gunzip		$1;
+			*.tar)		tar xvf		$1 ;;
+			*.zip)		unzip		$1 ;;
+			*.7z)		7z x		$1 ;;
+			*)	echo "Don't know how to extract $1" ;;
+		esac
+
+	else
+		echo "$1 is not a valid input file to extract"
+	fi
+}
