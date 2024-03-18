@@ -1,0 +1,12 @@
+# one-liner functions
+current_branch () { git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'; }
+disk_usage () { df | head -n 1 && df | tail -n +2 | sort -nk 5; }
+hexdump () { od -x $1; }
+my_find () { ls -R | grep -e "$1"; }
+
+list_functions () {
+	if [[ "#$" == 0 ]]; then declare -F | awk '{print $3}' | sort -fu;
+ 	else					 delcare -F | awk '{print $3}' | grep -v "^_" | sort -fu;
+  	fi
+}
+
