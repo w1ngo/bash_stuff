@@ -16,6 +16,7 @@ alias cs='cscope -R'
 alias shrink='sed "s|\t||g" | tr -s " "'
 alias mv='mv -i'
 alias cls='clear && ls'
+alias cp='cp -i'
 alias vi='vim'
 
 export CSCOPE_EDITOR=vim
