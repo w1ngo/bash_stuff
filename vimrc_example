@@ -21,12 +21,15 @@ noremap <F1> gT
 noremap <F2> gt
 
 " Enable Word-like shortcuts
-noremap <C-c> y
-noremap <C-x> c
+xnoremap <C-c> y
+xnoremap <C-x> c
+
 noremap <C-p> p
 inoremap <C-p> <Esc>pi
+
 noremap <C-u> :u<CR>
 inoremap <C-u> <C-o>:u<CR>
+
 noremap <F12> :w<CR>
 inoremap <F12> <C-o>:w<CR>
 
