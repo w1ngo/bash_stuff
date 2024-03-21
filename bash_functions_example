@@ -1,8 +1,10 @@
 # one-liner functions
 current_branch () { git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'; }
+current_branch_short () { current_branch | sed -e "s|\( \)\(/.......\)\(.*\)|\1\2|"; }
 disk_usage () { df | head -n 1 && df | tail -n +2 | sort -nk 5; }
 hexdump () { od -x $1; }
-my_find () { ls -R | grep -e "$1"; }
+my_find () { find . -name $1; }
+reload () { . ~/.bashrc; }
 
 list_functions () {
 	if [[ "#$" == 0 ]]; then declare -F | awk '{print $3}' | sort -fu;
@@ -45,11 +47,6 @@ extract () {
 	else
 		echo "$1 is not a valid input file to extract"
 	fi
-}
-
-reload () {
-	. ~/.bash_functions
-	. ~/.bash_aliases
 }
 
 hh_help () {
