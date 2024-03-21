@@ -6,16 +6,32 @@ set tabstop=4 shiftwidth=4 noexpandtab
 filetype on
 filetype indent on
 filetype plugin on
-
-set nocopmatible
-
+set nocopmatible mouse=a
 syntax on
 syntax enable
 
 set number relativenumber
 set smartcase showmode
 
-inoremap {<CR> {<CR>}<ESC>ko
+" autocomplete curly-braces when in insert mode
+inoremap {<CR> {<CR>}<ESC>O
+
+" tab navigation
+noremap <F1> gT
+noremap <F2> gt
+
+" Enable Word-like shortcuts
+noremap <C-c> y
+noremap <C-x> c
+noremap <C-p> p
+inoremap <C-p> <Esc>pi
+noremap <C-u> :u<CR>
+inoremap <C-u> <C-o>:u<CR>
+noremap <F12> :w<CR>
+inoremap <F12> <C-o>:w<CR>
+
+" Remove need to directly press Esc to leave insert mode
+inoremap <C-e> <Esc>
 
 if &diff
     colorscheme evening
