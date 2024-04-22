@@ -16,16 +16,19 @@ set smartcase showmode
 " autocomplete curly-braces when in insert mode
 inoremap {<CR> {<CR>}<ESC>O
 
+noremap <C-d> :qa<CR>
+inoremap <C-d> <C-o>:q<CR>
+noremap <C-c> :qa!<CR>
+inoremap <C-c> <C-o>:q!<CR>
+
+noremap <C-j> <C-e>
+noremap <C-k> <C-y>
+
 " tab navigation
 noremap <F1> gT
+inoremap <F1> <C-o>gT
 noremap <F2> gt
-
-" Enable Word-like shortcuts
-xnoremap <C-c> y
-xnoremap <C-x> c
-
-noremap <C-p> p
-inoremap <C-p> <Esc>pi
+inoremap <F2> <C-o>gt
 
 noremap <C-u> :u<CR>
 inoremap <C-u> <C-o>:u<CR>
