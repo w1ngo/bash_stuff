@@ -31,8 +31,8 @@ update_clones () {
 }
 
 extract () {
-	if [ -f $1 ]; then
-		case $1 in
+	if [[ -f $1 ]]; then
+		case "$1" in
 			*.tar.bz2)	tar xzjf	$1 ;;
 			*.targz)	tar xvzf	$1 ;;
 			*.bz2)		bunzip		$1 ;;
