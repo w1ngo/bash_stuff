@@ -13,6 +13,16 @@ syntax enable
 set number relativenumber
 set smartcase showmode
 
+noremap ; $
+xnoremap ; $
+noremap f ^
+xnoremap f ^
+noremap z 0
+xnoremap z 0
+
+noremap E be
+xnoremap E be
+
 " autocomplete curly-braces when in insert mode
 inoremap {<CR> {<CR>}<ESC>O
 
@@ -22,7 +32,9 @@ noremap <C-c> :qa!<CR>
 inoremap <C-c> <C-o>:q!<CR>
 
 noremap <C-j> <C-e>
+inoremap C-j> <C-o><C-e>
 noremap <C-k> <C-y>
+inoremap C-k> <C-o><C-y>
 
 " tab navigation
 noremap <F1> gT
@@ -38,6 +50,7 @@ inoremap <F12> <C-o>:w<CR>
 
 " Remove need to directly press Esc to leave insert mode
 inoremap <C-e> <Esc>
+xnoremap <C-e> <Esc>
 
 if &diff
     colorscheme evening
