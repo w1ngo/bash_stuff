@@ -6,18 +6,22 @@ unalias fgrep
 unalias egrep
 clear
 
-alias clear='clear && clear'
 alais ls='ls --color=always'
-alias lsa='ls -a'
-alias ..='cd .. && clear && ls'
-alias py='python'
-alias grepr='grep -r'
-alias cs='cscope -R'
+alias lsa='ls -A'
+alias lss='ls --format=single-column'
+alias lsl='ls -lh'
+alias ..='cd ..; clear; ls'
+alias py='python3'
+alias grep='grep --color=always'
+alias grepr='grep -riI'
 alias shrink='sed "s|\t||g" | tr -s " "'
 alias mv='mv -i'
-alias cls='clear && ls'
 alias cp='cp -i'
-alias vi='vim'
+alias cls='clear; ls'
+alias ping='ping -q -c 2 -i 0.2'
+alias ip='ip -c'
+alias ipa='ip -c -br a'
+alias iden='echo "$(whoami)@$(hostname)"'
 
 export CSCOPE_EDITOR=vim
 export EDITOR=vim
