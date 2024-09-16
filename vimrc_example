@@ -1,40 +1,50 @@
-colorscheme desert
-set background=dark
+syntax off
 
-set tabstop=4 shiftwidth=4 noexpandtab
+" set env settings to make me not hate vim
+set bg=dark ts=3 sw=3 et is hls cin
+set nocompatible ai mouse= nu rnu scs smd
+set sc nowrap completeopt=menuone,menu,longest,preview
 
+" let vim act differently for different filetypes
 filetype on
 filetype indent on
 filetype plugin on
-set nocopmatible mouse=a
+set background=dark
+colo elflord
 syntax on
-syntax enable
 
-set number relativenumber
-set smartcase showmode
+au CursorMovedI,InsertLEave * if pumvisible() == 0|silent! pclose|endif
 
-noremap ; $
+" Make space & enter key work even in normal mode
+noremap <space> i<space><esc>
+noremap <CR> i<CR><esc>
+
+" Jump to front or back of line
+noremap  ; $
 xnoremap ; $
-noremap f ^
+noremap  f ^
 xnoremap f ^
-noremap z 0
-xnoremap z 0
-
-noremap E be
-xnoremap E be
+noremap  F 0
+xnoremap F 0
 
 " autocomplete curly-braces when in insert mode
 inoremap {<CR> {<CR>}<ESC>O
 
-noremap <C-d> :qa<CR>
+" Shortcuts for closing tabs/windows
+noremap  <C-d> :qa<CR>
 inoremap <C-d> <C-o>:q<CR>
-noremap <C-c> :qa!<CR>
+noremap  <C-c> :q!<CR>
 inoremap <C-c> <C-o>:q!<CR>
 
-noremap <C-j> <C-e>
-inoremap C-j> <C-o><C-e>
-noremap <C-k> <C-y>
-inoremap C-k> <C-o><C-y>
+" Make moving up and down a bit more intuitive
+noremap  <C-j> <C-e>j
+inoremap <C-j> <C-o>j<C-o><C-e>
+noremap  <C-k> <C-y>
+inoremap <C-k> <C-o>k<C-o><C-y>
+noremap  <Up> <C-y>
+xnoremap <Up> <C-y>
+noremap  <Down> <C-e>
+xnoremap <Down> <C-e>
 
 " tab navigation
 noremap <F1> gT
@@ -42,15 +52,18 @@ inoremap <F1> <C-o>gT
 noremap <F2> gt
 inoremap <F2> <C-o>gt
 
-noremap <C-u> :u<CR>
-inoremap <C-u> <C-o>:u<CR>
-
-noremap <F12> :w<CR>
-inoremap <F12> <C-o>:w<CR>
+noremap  <C-s> :w<CR>
+inoremap <C-s> <C-o>:w<CR>
 
 " Remove need to directly press Esc to leave insert mode
 inoremap <C-e> <Esc>
 xnoremap <C-e> <Esc>
+
+" Jump to bottom or top line of screen
+noremap  B L
+xnoremap B L
+noremap  T H
+xnoremap T H
 
 if &diff
     colorscheme evening
