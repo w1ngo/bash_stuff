@@ -6,6 +6,27 @@ hexdump () { od -x $1; }
 my_find () { find . -name $1; }
 reload () { . ~/.bashrc; }
 
+zip_up () { tar -czvf "$1.tgz" "${@:3}"; }
+
+trash () { for f in "${@:1}"; do mv $f ~/.trash; done }
+
+# tweaks grep a little in the way I like
+Grep () {
+	command="grep --color=always -riI"
+	for arg in "$@"; do command+=" -e $arg"; done
+	$command | sed 's/:/: /g;s/\t//g;s/ \+/ /g' | sort -fuimsb --parallel=4
+}
+
+go_back () {
+	if [[ -n "$1" ]]; then
+		for i in $(seq 1 "$1"); do cd ..; done
+	else
+		cd ..
+	fi
+	clear
+	ls
+}
+
 list_functions () {
 	if [[ "#$" == 0 ]]; then declare -F | awk '{print $3}' | sort -fu;
  	else					 delcare -F | awk '{print $3}' | grep -v "^_" | sort -fu;
