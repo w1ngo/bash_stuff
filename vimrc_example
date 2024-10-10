@@ -1,7 +1,7 @@
 syntax off
 
 " set env settings to make me not hate vim
-set bg=dark ts=3 sw=3 et is hls cin
+set bg=dark ts=4 sw=4 et is hls cin
 set nocompatible ai mouse= nu rnu scs smd
 set sc nowrap completeopt=menuone,menu,longest,preview
 
@@ -10,22 +10,20 @@ filetype on
 filetype indent on
 filetype plugin on
 set background=dark
-colo elflord
+colo darkblue
 syntax on
 
 au CursorMovedI,InsertLEave * if pumvisible() == 0|silent! pclose|endif
 
-" Make space & enter key work even in normal mode
+" Allow for basic editing changes without mode changes
 noremap <space> i<space><esc>
 noremap <CR> i<CR><esc>
+noremap <C-e> <ESC>
 
 " Jump to front or back of line
 noremap  ; $
-xnoremap ; $
 noremap  f ^
-xnoremap f ^
 noremap  F 0
-xnoremap F 0
 
 " autocomplete curly-braces when in insert mode
 inoremap {<CR> {<CR>}<ESC>O
@@ -42,9 +40,7 @@ inoremap <C-j> <C-o>j<C-o><C-e>
 noremap  <C-k> <C-y>
 inoremap <C-k> <C-o>k<C-o><C-y>
 noremap  <Up> <C-y>
-xnoremap <Up> <C-y>
 noremap  <Down> <C-e>
-xnoremap <Down> <C-e>
 
 " tab navigation
 noremap <F1> gT
@@ -52,18 +48,18 @@ inoremap <F1> <C-o>gT
 noremap <F2> gt
 inoremap <F2> <C-o>gt
 
+" Basic save and undo shortcuts
 noremap  <C-s> :w<CR>
 inoremap <C-s> <C-o>:w<CR>
-
-" Remove need to directly press Esc to leave insert mode
-inoremap <C-e> <Esc>
-xnoremap <C-e> <Esc>
+noremap <C-u> :u<CR>
+inoremap <C-u> <C-o>:u<CR>
 
 " Jump to bottom or top line of screen
 noremap  B L
-xnoremap B L
 noremap  T H
-xnoremap T H
+
+" Case-insensitive search
+noremap \ /\c
 
 if &diff
     colorscheme evening
