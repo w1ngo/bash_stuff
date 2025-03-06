@@ -1,15 +1,14 @@
 syntax off
 
 " set env settings to make me not hate vim
-set bg=dark ts=4 sw=4 et is hls cin
-set nocompatible ai mouse= nu rnu scs smd
-set sc nowrap completeopt=menuone,menu,longest,preview
+set bg=dark ts=4 sw=4 et is hls cin nocompatible
+set ai mouse= nu rnu scs smd ic sc nowrap
+set completeopt=menuone,menu,longest,preview lazyredraw
 
 " let vim act differently for different filetypes
 filetype on
 filetype indent on
 filetype plugin on
-set background=dark
 colo darkblue
 syntax on
 
@@ -20,6 +19,17 @@ noremap <space> i<space><esc>
 noremap <CR> i<CR><esc>
 noremap <C-e> <ESC>
 
+" Draw attention to the current cursor line
+set cursorline
+hi cursorline cterm=bold ctermbg=238
+hi MatchParen cterm=underline ctermbg=brown
+hi lineNr ctermfg=grey
+hicursorLineNr ctermfg=magenta
+
+" Clear background formatting for search results...Ctrl+l redraws screen
+hi Search cterm=NONE ctermfg=black ctermbg=yellow
+noremap <silent><C-l> :nohl<CR>
+
 " Jump to front or back of line
 noremap  ; $
 noremap  f ^
@@ -28,7 +38,7 @@ noremap  F 0
 " autocomplete curly-braces when in insert mode
 inoremap {<CR> {<CR>}<ESC>O
 
-" Shortcuts for closing tabs/windows
+" Shorten the quit process
 noremap  <C-d> :qa<CR>
 inoremap <C-d> <C-o>:q<CR>
 noremap  <C-c> :q!<CR>
@@ -47,12 +57,6 @@ noremap <F1> gT
 inoremap <F1> <C-o>gT
 noremap <F2> gt
 inoremap <F2> <C-o>gt
-
-" Basic save and undo shortcuts
-noremap  <C-s> :w<CR>
-inoremap <C-s> <C-o>:w<CR>
-noremap <C-u> :u<CR>
-inoremap <C-u> <C-o>:u<CR>
 
 " Jump to bottom or top line of screen
 noremap  B L
