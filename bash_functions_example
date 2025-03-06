@@ -5,6 +5,7 @@ disk_usage () { df | head -n 1 && df | tail -n +2 | sort -nk 5; }
 hexdump () { od -x $1; }
 my_find () { find . -name $1; }
 reload () { . ~/.bashrc; }
+trash () { for f in "${@:1}"; do mv $f ~/.trash; done }
 
 zip_up () { tar -czvf "$1.tgz" "${@:3}"; }
 
@@ -25,6 +26,28 @@ go_back () {
 	fi
 	clear
 	ls
+}
+
+update_repos () {
+	pushd $(pwd) > /dev/null
+	COL='\033[1;31m'
+	COL2='\033[;32m'
+	ORIG='\033[3;37m'
+	OUT='\033[;37m'
+
+	printf '\n\n${COL}Updating Repos in $loc${ORIG}'
+	cd "$1" && FOLDERS=($(ls --color=never -d */))
+	for folder in "${FOLDERS[@]}"; do
+		cd "$loc"/"$folder"
+		if [ -d ".git" ]; then
+			printf "\n${COL2}  Updating $folder${ORIG}\n"
+			git remote update
+			if [ "$2" == "clean" ]; then git gc; fi
+		fi
+	done
+
+	popd > /dev/null
+	printf "${OUT}"
 }
 
 list_functions () {
