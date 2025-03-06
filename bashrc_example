@@ -1,9 +1,17 @@
+bind "set show-all-if-ambiguous" &> /dev/null
+bind "set bell-style none" &> /dev/null
+stty -tostop
+
+HISTCONTROL=ignoreboth
+HISTFILESIZE=100000
+HISTSIZE=10000
+
 if [ -f /etc/bashrc ]; then . /etc/bashrc; fi
-. ~/.bash_functions
-. ~/.bash_aliases
+if [ -f ~/.bash_functions ]; then . ~/.bash_functions; fi
+if [ -f ~/.bash_aliases ]; then . ~/.bash_aliases; fi
 
 GREEN="32m"
 WHITE="37m"
 MAGENTA="35m"
 BOLD="1"
-export PS1='\n[\W]$ "; else PS1=\n\e[;$WHITE[\W\e[$BOLD;$MAGENTA$(current_branch_short)\e[m]\$\e[;GREEN '
+export PS1=\n\e[0;37m[\W\e[1;35m`current_branch_short`\e[m]\n\$\e[0;32m '
