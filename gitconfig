@@ -1,0 +1,36 @@
+[user]
+  name = Holden Hill
+  email = holden.onestarflag@gmail.com
+[core]
+  editor = vim
+  autocrlf = input
+[color]
+  diff = auto
+  branch = auto
+[push]
+  default = simple
+  autoSetupRemote = true
+[alias]
+  st = status
+  br = branch
+  rb = rebase -i
+[help]
+  autocorrect = prompt
+
+[diff]
+  algorithm = histogram
+  context = 10
+  colorMoved = default
+[pull]
+  ff = only
+[fetch]
+  prune = true
+  prunetags = true
+[merge]
+  conflictstyle = diff3
+[rebase]
+  autosquash = true
+[branch]
+  sort = committerdate
+[gc]
+  reflogExpireUnreachable = 3 days
