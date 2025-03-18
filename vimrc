@@ -24,7 +24,7 @@ set cursorline
 hi cursorline cterm=bold ctermbg=238
 hi MatchParen cterm=underline ctermbg=brown
 hi lineNr ctermfg=grey
-hicursorLineNr ctermfg=magenta
+hi cursorLineNr ctermfg=magenta
 
 " Clear background formatting for search results...Ctrl+l redraws screen
 hi Search cterm=NONE ctermfg=black ctermbg=yellow
