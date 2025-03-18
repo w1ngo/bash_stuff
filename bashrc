@@ -14,7 +14,7 @@ if [ -f ~/.bash_aliases ]; then . ~/.bash_aliases; fi
 export PS1='\n\[\e[;37m\][\[\e[3;36m\]\u\[\e[;37m\]@\[\e[;35m\]\h\[\e[;37m\] \w\[\e[3;33m\]`current_branch`\[\e[;37m]\]\n\$\[\e[;32m\] '
 export TERM='xterm-256color'
 
-# export PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/,$ENV_PATH}))')" # remove path dupes
+export PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/,$ENV{PATH}))')" # remove path dupes
 
 alias ls='ls --color=always'
 alias lsa='ls -A'
