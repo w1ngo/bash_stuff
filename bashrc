@@ -25,10 +25,13 @@ alias ..='go_back'
 alias py='python'
 alias grep='grep --color=always'
 alias grepr='grep -riI'
-alias shrink='sed "s|\t||g" | tr -s " "' # sed "s/:/: /;s/\t//g;s/ \+/ /g" | sort -fu
+alias shrink='sed "s/:/: /g;s/\t//g;s/ \+/ /g"'
 alias mv='mv -i'
 alias cp='cp -i'
 alias cls='clear; ls'
+alias table='column -t'
+alias pwd='pwd && pwd -P'
+alias vim='vim -p'
 alias ping='ping -q -c 2 -i 0.2'
 alias ip='ip -c'
 alias sortu='sort -fuimsb =--parallel=4'
@@ -36,28 +39,22 @@ alias cscope='cscope -qR'
 alias tar_up="tar --remove-files -czf"
 alias awk='gawk -O '
 alias shasum="sha256sum"
-alias vim='vim -p'
+alias watch='watch -p -n 1'
+alias disassemble='objdump -dCl'
+alias demangle='c++filt'
+alias stripcolor='sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK//g' # strips color codes to make editor usage easier...needs to be piped into
+									# if ^M digraph appears at EOL, this is Windows/DOS format (CR-LF vs LF)
+									# in vim running :e ++ff=dos then :set ff=unix finally :wq works, as does dos2unix
 
 export CSCOPE_EDITOR=vim
 export EDITOR=vim
 
+ff () { nohup firefox "$1" & }
 current_branch () { git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'; }
 disk_usage () { df | head -n 1 && df | tail -n +2 | sort -nk 5; }
-hexdump () { od -x $1; }
-my_find () { find . -name $1; }
 reload () { . ~/.bashrc; }
 trash () { for f in "${@:1}"; do mv $f ~/.trash; done }
-
-zip_up () { tar -czvf "$1.tgz" "${@:3}"; }
-
-trash () { for f in "${@:1}"; do mv $f ~/.trash; done }
-
-# tweaks grep a little in the way I like
-Grep () {
-	command="grep --color=always -riI"
-	for arg in "$@"; do command+=" -e $arg"; done
-	$command | sed 's/:/: /g;s/\t//g;s/ \+/ /g' | sort -fuimsb --parallel=4
-}
+list_functions () { delcare -F | awk '{print $3}' | grep -v "^_" | sort -fu; }
 
 go_back () {
 	if [[ -n "$1" ]]; then
@@ -94,12 +91,6 @@ update_repos () {
 
 	popd > /dev/null
 	printf "${OUT}"
-}
-
-list_functions () {
-	if [[ "#$" == 0 ]]; then declare -F | awk '{print $3}' | sort -fu;
- 	else					 delcare -F | awk '{print $3}' | grep -v "^_" | sort -fu;
-  	fi
 }
 
 # arg 1 should be absolute path to folder storing the clones
