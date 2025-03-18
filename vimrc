@@ -58,14 +58,5 @@ inoremap <F1> <C-o>gT
 noremap <F2> gt
 inoremap <F2> <C-o>gt
 
-" Jump to bottom or top line of screen
-noremap  B L
-noremap  T H
-
 " Case-insensitive search
 noremap \ /\c
-
-if &diff
-    colorscheme evening
-    set mouse=a
-endif
