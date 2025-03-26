@@ -2,22 +2,17 @@ syntax off
 
 " set env settings to make me not hate vim
 set bg=dark ts=4 sw=4 et is hls cin nocompatible
-set ai mouse= nu rnu scs smd ic sc nowrap
-set completeopt=menuone,menu,longest,preview lazyredraw
+set ai mouse= nu rnu scs smd ic sc nowrap lazyredraw
 
-" let vim act differently for different filetypes
 filetype on
 filetype indent on
 filetype plugin on
 colo darkblue
 syntax on
 
-au CursorMovedI,InsertLEave * if pumvisible() == 0|silent! pclose|endif
-
-" Allow for basic editing changes without mode changes
-noremap <space> i<space><esc>
-noremap <CR> i<CR><esc>
-noremap <C-e> <ESC>
+" Popup Menu
+" set completeopt=menuone,menu,longest,preview
+" au CursorMovedI,InsertLEave * if pumvisible() == 0|silent! pclose|endif
 
 " Draw attention to the current cursor line
 set cursorline
@@ -26,17 +21,58 @@ hi MatchParen cterm=underline ctermbg=brown
 hi lineNr ctermfg=grey
 hi cursorLineNr ctermfg=magenta
 
+" Setup history file for persistence across sessions
+if !isdirectory($HOME./".vim")
+  call mkdir($HOME./".vim", 0700)
+endif
+if !isdirectory($HOME."/.vim/undo-dir")
+  call mkdir($HOME."/.vim/undo-dir", 0700)
+endif
+set undordir=~/.vim/undo-dir
+set undofile
+
 " Clear background formatting for search results...Ctrl+l redraws screen
 hi Search cterm=NONE ctermfg=black ctermbg=yellow
 noremap <silent><C-l> :nohl<CR>
+
+" Auto-load cscope DB if present
+"   Currently overriding default cscope out to .cscope.out ... findfile dependent on this
+function! LoadCscope()
+  let db = findfile(".cscope.out", ".;")
+  if(!empty(db))
+    let path = strpart(db, 0, match(db, "/cscope.out$"))
+    set nocscopeverbose
+    exe "cs add " . db . " " . path
+    set cscopeverbose
+  elseif $CSCOPE_DB != ""
+    cs add $CSCOPE_DB
+  endif
+endfunction
+au BufEnter /* call LoadCscope()
+
+" Cscope shortcuts
+"  CTRL-\ -> find c <under cursor> -> find funcs calling this func
+"  CTRL-[ -> find s <under cursor> -> find this symbol
+"  CTRL-] -> find g <under cursor> -> find definition of this symbol
+map g<C-\> :scs find c <C-R>=expand("<cword>")<CR><CR>
+map g<C-[> :scs find s <C-R>=expand("<cword>")<CR><CR>
+map g<C-]> :scs find g <C-R>=expand("<cword>")<CR><CR>
 
 " Jump to front or back of line
 noremap  ; $
 noremap  f ^
 noremap  F 0
 
+" Allow for basic editing changes without mode changes
+noremap <space> i<space><esc>
+noremap <CR> i<CR><esc>
+noremap <C-e> <ESC>
+
 " autocomplete curly-braces when in insert mode
 inoremap {<CR> {<CR>}<ESC>O
+
+" ESC button is far
+inoremap <C-e> <ESC>
 
 " Shorten the quit process
 noremap  <C-d> :qa<CR>
@@ -57,6 +93,3 @@ noremap <F1> gT
 inoremap <F1> <C-o>gT
 noremap <F2> gt
 inoremap <F2> <C-o>gt
-
-" Case-insensitive search
-noremap \ /\c
