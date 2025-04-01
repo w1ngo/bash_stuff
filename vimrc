@@ -11,8 +11,8 @@ colo darkblue
 syntax on
 
 " Popup Menu
-" set completeopt=menuone,menu,longest,preview
-" au CursorMovedI,InsertLEave * if pumvisible() == 0|silent! pclose|endif
+set completeopt=menuone,menu,longest,preview
+au CursorMovedI,InsertLEave * if pumvisible() == 0|silent! pclose|endif
 
 " Draw attention to the current cursor line
 set cursorline
@@ -22,13 +22,13 @@ hi lineNr ctermfg=grey
 hi cursorLineNr ctermfg=magenta
 
 " Setup history file for persistence across sessions
-if !isdirectory($HOME./".vim")
-  call mkdir($HOME./".vim", 0700)
+if !isdirectory($HOME."/.vim")
+  call mkdir($HOME."/.vim", 0700)
 endif
 if !isdirectory($HOME."/.vim/undo-dir")
   call mkdir($HOME."/.vim/undo-dir", 0700)
 endif
-set undordir=~/.vim/undo-dir
+set undodir=~/.vim/undo-dir
 set undofile
 
 " Clear background formatting for search results...Ctrl+l redraws screen
@@ -93,3 +93,8 @@ noremap <F1> gT
 inoremap <F1> <C-o>gT
 noremap <F2> gt
 inoremap <F2> <C-o>gt
+
+" Copies currently selected text to system clipboard
+let @c = ':w !pbcopy'
+let @p = ':r !pbpaste'
+set clipboard=unnamedplus
