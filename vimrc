@@ -7,7 +7,7 @@ set ai mouse= nu rnu scs smd ic sc nowrap lazyredraw
 filetype on
 filetype indent on
 filetype plugin on
-colo darkblue
+colo habamax
 syntax on
 
 " Popup Menu
@@ -64,8 +64,8 @@ noremap  f ^
 noremap  F 0
 
 " Allow for basic editing changes without mode changes
-noremap <space> i<space><esc>
 noremap <CR> i<CR><esc>
+noremap <space> i<space><esc>
 noremap <C-e> <ESC>
 
 " autocomplete curly-braces when in insert mode
@@ -98,3 +98,20 @@ inoremap <F2> <C-o>gt
 let @c = ':w !pbcopy'
 let @p = ':r !pbpaste'
 set clipboard=unnamedplus
+
+" draw the line
+set cc=80
+hi Todo ctermbg=darkred ctermfg=white cterm=bold
+
+" code folding
+set foldmethod=syntax
+noremap . za
+autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
+set fcs=fold:\ 
+augroup AutoSaveFolds
+    autocmd!
+    autocmd BufWinLeave ?* mkview
+    autocmd BufWinEnter ?* silent loadview
+augroup END
+
+
