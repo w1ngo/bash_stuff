@@ -114,4 +114,47 @@ augroup AutoSaveFolds
     autocmd BufWinEnter ?* silent loadview
 augroup END
 
+" In Todo pane, gf opens file under cursor
+"               <C-w>f opens file in new window
+"               <C-w>gf opens file in new tab
+command Todo noautocmd vimgrep /TODO\|HILLH/j ** | cw
+
+function! CommentLines()
+  let l:start = line("'<")
+  let l:start = line("'>")
+  for l:line in range(l:start, l:end)
+    call setline(l:line, '// ' . getline(l:line)
+  endfor
+endfunction
+
+function! UnCommentLines()
+  let l:start = line("'<")
+  let l:start = line("'>")
+  for l:line in range(l:start, l:end)
+    execute l:line . 's@^//\s@@'
+  endfor
+endfunction
+
+function! CommentLines_Py()
+  let l:start = line("'<")
+  let l:start = line("'>")
+  for l:line in range(l:start, l:end)
+    call setline(l:line, '# ' . getline(l:line)
+  endfor
+endfunction
+
+function! UnCommentLines_Py()
+  let l:start = line("'<")
+  let l:start = line("'>")
+  for l:line in range(l:start, l:end)
+    execute l:line . 's@^#\s@@'
+  endfor
+endfunction
+
+
+" Block code shortcuts for C/C++ and Python
+au BufNewFile,BufRead *.py vnoremap <silent> <leader>c :<C-u>call CommentLines_Py()<CR>
+au BufNewFile,BufRead *.py vnoremap <silent> <leader>uc :<C-u>call UnCommentLines_Py()<CR>
+au BufNewFile,BufRead *.cpp,*.c,*.h vnoremap <silent> <leader>c :<C-u>call CommentLines()<CR>
+au BufNewFile,BufRead *.cpp,*.c,*.h vnoremap <silent> <leader>uc :<C-u>call UnCommentLines()<CR>
 
