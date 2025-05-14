@@ -54,9 +54,14 @@ au BufEnter /* call LoadCscope()
 "  CTRL-\ -> find c <under cursor> -> find funcs calling this func
 "  CTRL-[ -> find s <under cursor> -> find this symbol
 "  CTRL-] -> find g <under cursor> -> find definition of this symbol
-map g<C-\> :scs find c <C-R>=expand("<cword>")<CR><CR>
-map g<C-[> :scs find s <C-R>=expand("<cword>")<CR><CR>
-map g<C-]> :scs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>f :cs find f <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>i :cs find i <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
 " Jump to front or back of line
 noremap  ; $
@@ -113,6 +118,8 @@ augroup AutoSaveFolds
     autocmd BufWinLeave ?* mkview
     autocmd BufWinEnter ?* silent loadview
 augroup END
+command Fold noautocmd set foldlevel=1
+command Unfold noautocmd set foldlevel=99
 
 " In Todo pane, gf opens file under cursor
 "               <C-w>f opens file in new window
@@ -158,3 +165,5 @@ au BufNewFile,BufRead *.py vnoremap <silent> <leader>uc :<C-u>call UnCommentLine
 au BufNewFile,BufRead *.cpp,*.c,*.h vnoremap <silent> <leader>c :<C-u>call CommentLines()<CR>
 au BufNewFile,BufRead *.cpp,*.c,*.h vnoremap <silent> <leader>uc :<C-u>call UnCommentLines()<CR>
 
+command Todo noautocmd vimgrep /TODO\|HILLH/j ** | cw
+command Debug noautocmd vimgrep /DEBUG/j ** | cw
