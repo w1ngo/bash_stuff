@@ -1,8 +1,12 @@
 syntax off
 
+" Commands to remember:
+"  zz   - puts cursorline at middle of screen
+"  gg=G - moves to top of file and fixes indenting to the bottom
+
 " set env settings to make me not hate vim
 set bg=dark ts=4 sw=4 et is hls cin nocompatible
-set ai mouse= nu rnu scs smd ic sc nowrap lazyredraw
+set ai mouse=a nu rnu scs smd ic sc nowrap lazyredraw
 
 filetype on
 filetype indent on
@@ -10,16 +14,20 @@ filetype plugin on
 colo habamax
 syntax on
 
-" Popup Menu
-set completeopt=menuone,menu,longest,preview
-au CursorMovedI,InsertLEave * if pumvisible() == 0|silent! pclose|endif
-
 " Draw attention to the current cursor line
 set cursorline
 hi cursorline cterm=bold ctermbg=238
-hi MatchParen cterm=underline ctermbg=brown
 hi lineNr ctermfg=grey
 hi cursorLineNr ctermfg=magenta
+
+# Visual cue when a line is getting long
+set colorcolumn=141
+" set colorcolumn=81
+
+" Some custom coloring
+hi ColorColumn ctermbg=darkblue
+hi Todo ctermfg=white ctermbg=darkred cterm=bold
+hi MatchParen cterm=underline ctermbg=brown
 
 " Setup history file for persistence across sessions
 if !isdirectory($HOME."/.vim")
@@ -76,9 +84,6 @@ noremap <C-e> <ESC>
 " autocomplete curly-braces when in insert mode
 inoremap {<CR> {<CR>}<ESC>O
 
-" ESC button is far
-inoremap <C-e> <ESC>
-
 " Shorten the quit process
 noremap  <C-d> :qa<CR>
 inoremap <C-d> <C-o>:q<CR>
@@ -93,20 +98,16 @@ inoremap <C-k> <C-o>k<C-o><C-y>
 noremap  <Up> <C-y>
 noremap  <Down> <C-e>
 
-" tab navigation
-noremap <F1> gT
-inoremap <F1> <C-o>gT
-noremap <F2> gt
-inoremap <F2> <C-o>gt
-
 " Copies currently selected text to system clipboard
 let @c = ':w !pbcopy'
 let @p = ':r !pbpaste'
 set clipboard=unnamedplus
 
-" draw the line
-set cc=80
-hi Todo ctermbg=darkred ctermfg=white cterm=bold
+" Keep search results in the middle of the screen
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
 
 " code folding
 set foldmethod=syntax
