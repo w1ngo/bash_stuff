@@ -20,7 +20,7 @@ hi cursorline cterm=bold ctermbg=238
 hi lineNr ctermfg=grey
 hi cursorLineNr ctermfg=magenta
 
-# Visual cue when a line is getting long
+" Visual cue when a line is getting long
 set colorcolumn=141
 " set colorcolumn=81
 
@@ -121,11 +121,6 @@ augroup AutoSaveFolds
 augroup END
 command Fold noautocmd set foldlevel=1
 command Unfold noautocmd set foldlevel=99
-
-" In Todo pane, gf opens file under cursor
-"               <C-w>f opens file in new window
-"               <C-w>gf opens file in new tab
-command Todo noautocmd vimgrep /TODO\|HILLH/j ** | cw
 
 function! CommentLines()
   let l:start = line("'<")
