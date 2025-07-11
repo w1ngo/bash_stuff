@@ -109,18 +109,18 @@ nnoremap N Nzz
 nnoremap * *zz
 nnoremap # #zz
 
-" code folding
-set foldmethod=syntax
+"code folding
+"set foldmethod=syntax
 noremap . za
-autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
-set fcs=fold:\ 
-augroup AutoSaveFolds
-    autocmd!
-    autocmd BufWinLeave ?* mkview
-    autocmd BufWinEnter ?* silent loadview
-augroup END
-command Fold noautocmd set foldlevel=1
-command Unfold noautocmd set foldlevel=99
+"autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
+"set fcs=fold:\ 
+"augroup AutoSaveFolds
+"  autocmd!
+"  autocmd BufWinLeave ?* mkview
+"  autocmd BufWinEnter ?* silent loadview
+"augroup END
+"command Fold noautocmd set foldlevel=1
+"command Unfold noautocmd set foldlevel=99
 
 function! CommentLines()
   let l:start = line("'<")
