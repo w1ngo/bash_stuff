@@ -3,10 +3,12 @@ syntax off
 " Commands to remember:
 "  zz   - puts cursorline at middle of screen
 "  gg=G - moves to top of file and fixes indenting to the bottom
+" <C-R> 0 (prints contents of last deleted/yanked register) to search highlighted text
 
 " set env settings to make me not hate vim
-set bg=dark ts=4 sw=4 et is hls cin nocompatible
-set ai mouse=a nu rnu scs smd ic sc nowrap lazyredraw
+set bg=dark ts=4 sw=4 et is hls cin
+set ai mouse=a number relativenumber scs smd ic sc 
+set nowrap lazyredraw nocompatible
 
 filetype on
 filetype indent on
@@ -22,10 +24,9 @@ hi cursorLineNr ctermfg=magenta
 
 " Visual cue when a line is getting long
 set colorcolumn=141
-" set colorcolumn=81
-
-" Some custom coloring
 hi ColorColumn ctermbg=darkblue
+
+" Other custom highlighting
 hi Todo ctermfg=white ctermbg=darkred cterm=bold
 hi MatchParen cterm=underline ctermbg=brown
 
@@ -43,6 +44,33 @@ set undofile
 hi Search cterm=NONE ctermfg=black ctermbg=yellow
 noremap <silent><C-l> :nohl<CR>
 
+" Navigate between beginning and end of a line
+noremap ; $
+noremap <leader>f 0
+noremap F ^
+
+" increment / decrement number under cursor
+noremap + <C-a>
+noremap - <C-x>
+
+" moving up and down
+noremap <C-j> <C-e>j
+inoremap <C-j> <C-o>j<C-o><C-e>
+noremap <C-k> <C-y>k
+inoremap <C-k> <C-o>k<C-o><C-y>
+
+" autocomplete curly-braces when in insert mode
+inoremap {<CR> {<CR>}<ESC>O
+
+" Keep search results in the middle of the screen
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+
+" search for what is currently highlighted in visual mode
+noremap <C-s> <C-R>0<CR>
+
 " Auto-load cscope DB if present
 "   Currently overriding default cscope out to .cscope.out ... findfile dependent on this
 function! LoadCscope()
@@ -58,69 +86,26 @@ function! LoadCscope()
 endfunction
 au BufEnter /* call LoadCscope()
 
-" Cscope shortcuts
-"  CTRL-\ -> find c <under cursor> -> find funcs calling this func
-"  CTRL-[ -> find s <under cursor> -> find this symbol
-"  CTRL-] -> find g <under cursor> -> find definition of this symbol
+" don't put the whole path in jumplist - cscope
+set cspc=1
 nmap <leader>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>f :cs find f <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>i :cs find i <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-
-" Jump to front or back of line
-noremap  ; $
-noremap  f ^
-noremap  F 0
+nmap <leader>d :vsp <CR>:cs find s <C-R>=expand("<cword>")<CR><CR>
 
 " Allow for basic editing changes without mode changes
 noremap <CR> i<CR><esc>
 noremap <space> i<space><esc>
 noremap <C-e> <ESC>
 
-" autocomplete curly-braces when in insert mode
-inoremap {<CR> {<CR>}<ESC>O
-
-" Shorten the quit process
-noremap  <C-d> :qa<CR>
-inoremap <C-d> <C-o>:q<CR>
-noremap  <C-c> :q!<CR>
-inoremap <C-c> <C-o>:q!<CR>
-
-" Make moving up and down a bit more intuitive
-noremap  <C-j> <C-e>j
-inoremap <C-j> <C-o>j<C-o><C-e>
-noremap  <C-k> <C-y>
-inoremap <C-k> <C-o>k<C-o><C-y>
-noremap  <Up> <C-y>
-noremap  <Down> <C-e>
-
-" Copies currently selected text to system clipboard
-let @c = ':w !pbcopy'
-let @p = ':r !pbpaste'
-set clipboard=unnamedplus
-
-" Keep search results in the middle of the screen
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap * *zz
-nnoremap # #zz
-
-"code folding
-"set foldmethod=syntax
+" For code folding
 noremap . za
-"autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
-"set fcs=fold:\ 
+set fcs=fold:\ 
 "augroup AutoSaveFolds
 "  autocmd!
 "  autocmd BufWinLeave ?* mkview
 "  autocmd BufWinEnter ?* silent loadview
 "augroup END
-"command Fold noautocmd set foldlevel=1
-"command Unfold noautocmd set foldlevel=99
+command Fold noautocmd set foldlevel=1
+command Unfold noautocmd set foldlevel=99
 
 function! CommentLines()
   let l:start = line("'<")
@@ -162,4 +147,16 @@ au BufNewFile,BufRead *.cpp,*.c,*.h vnoremap <silent> <leader>c :<C-u>call Comme
 au BufNewFile,BufRead *.cpp,*.c,*.h vnoremap <silent> <leader>uc :<C-u>call UnCommentLines()<CR>
 
 command Todo noautocmd vimgrep /TODO\|HILLH/j ** | cw
-command Debug noautocmd vimgrep /DEBUG/j ** | cw
+
+" I hate trailing whitespace
+function! StripTrailingWhitespace()
+  if !&binary && &filetype != 'diff'
+    let l_save = winsaveview()
+    keep %s/\s\+$//e
+    call winrestview(l_save)
+  endif
+endfunction
+
+command! Trim :call StripTrailingWhitespace()
+hi trailingWhitespace ctermbg=red
+match trailingWhitespace /\s\+$/
