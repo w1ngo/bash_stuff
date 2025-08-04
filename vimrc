@@ -6,7 +6,7 @@ syntax off
 " <C-R> 0 (prints contents of last deleted/yanked register) to search highlighted text
 
 " set env settings to make me not hate vim
-set bg=dark ts=4 sw=4 et is hls cin
+set bg=dark ts=4 sw=4 softtabstop=4 et is hls cin
 set ai mouse=a number relativenumber scs smd ic sc 
 set nowrap lazyredraw nocompatible
 
