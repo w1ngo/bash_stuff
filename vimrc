@@ -6,8 +6,8 @@ syntax off
 " <C-R> 0 (prints contents of last deleted/yanked register) to search highlighted text
 
 " set env settings to make me not hate vim
-set bg=dark ts=4 sw=4 softtabstop=4 et is hls cin
-set ai mouse=a number relativenumber scs smd ic sc 
+set ts=4 sw=4 softtabstop=4 et incsearch hlsearch cin
+set ai mouse=a number relativenumber scs smd ignorecase smartcase
 set nowrap lazyredraw nocompatible
 
 filetype on
@@ -94,57 +94,6 @@ nmap <leader>d :vsp <CR>:cs find s <C-R>=expand("<cword>")<CR><CR>
 " Allow for basic editing changes without mode changes
 noremap <CR> i<CR><esc>
 noremap <space> i<space><esc>
-noremap <C-e> <ESC>
-
-" For code folding
-noremap . za
-set fcs=fold:\ 
-"augroup AutoSaveFolds
-"  autocmd!
-"  autocmd BufWinLeave ?* mkview
-"  autocmd BufWinEnter ?* silent loadview
-"augroup END
-command Fold noautocmd set foldlevel=1
-command Unfold noautocmd set foldlevel=99
-
-function! CommentLines()
-  let l:start = line("'<")
-  let l:start = line("'>")
-  for l:line in range(l:start, l:end)
-    call setline(l:line, '// ' . getline(l:line)
-  endfor
-endfunction
-
-function! UnCommentLines()
-  let l:start = line("'<")
-  let l:start = line("'>")
-  for l:line in range(l:start, l:end)
-    execute l:line . 's@^//\s@@'
-  endfor
-endfunction
-
-function! CommentLines_Py()
-  let l:start = line("'<")
-  let l:start = line("'>")
-  for l:line in range(l:start, l:end)
-    call setline(l:line, '# ' . getline(l:line)
-  endfor
-endfunction
-
-function! UnCommentLines_Py()
-  let l:start = line("'<")
-  let l:start = line("'>")
-  for l:line in range(l:start, l:end)
-    execute l:line . 's@^#\s@@'
-  endfor
-endfunction
-
-
-" Block code shortcuts for C/C++ and Python
-au BufNewFile,BufRead *.py vnoremap <silent> <leader>c :<C-u>call CommentLines_Py()<CR>
-au BufNewFile,BufRead *.py vnoremap <silent> <leader>uc :<C-u>call UnCommentLines_Py()<CR>
-au BufNewFile,BufRead *.cpp,*.c,*.h vnoremap <silent> <leader>c :<C-u>call CommentLines()<CR>
-au BufNewFile,BufRead *.cpp,*.c,*.h vnoremap <silent> <leader>uc :<C-u>call UnCommentLines()<CR>
 
 command Todo noautocmd vimgrep /TODO\|HILLH/j ** | cw
 
@@ -160,3 +109,17 @@ endfunction
 command! Trim :call StripTrailingWhitespace()
 hi trailingWhitespace ctermbg=red
 match trailingWhitespace /\s\+$/
+
+if &diff
+  set mouse=a
+  windo syntax off
+  windo set nospell
+  windo set nofoldenable
+
+  hi cursorLine cterm=bold ctermfg=white
+
+  hi DiffAdd ctermbg=darkgreen ctermfg=black
+  hi DiffDelete ctermbg=darkred ctermfg=black
+  hi DiffChange ctermbg=blue ctermfg=white
+  hi DiffText ctermbg=darkblue ctermfg=white
+endif
